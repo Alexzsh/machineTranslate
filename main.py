@@ -7,12 +7,13 @@
 """
 
 import torch as t
-import random,time,pickle,os
+import time
 from torch import nn,optim
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
-from util import tensorFromPair,prepareData,timeSince,showPlot,TextDataset
-from model import Encoder,Decoder
+from util import showPlot,TextDataset
+from S_LSTM import Encoder,Decoder
+
 MAX_LENGTH=10
 
 SOS_token = 0
@@ -31,8 +32,7 @@ def trainData():
     output_size = lang_dataset.output_lang_words
     total_epoch = 20
     use_attn = False
-    # n_iters=10000
-    # training_pair = [tensorFromPair(input_lang,output_lang,random.choice(pairs)) for i in range(n_iters)]
+
     encoder = convert2Cuda(Encoder(input_size,hidden_size))
     decoder = convert2Cuda(Decoder(hidden_size,output_size,n_layers=2))
 
